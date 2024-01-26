@@ -3,6 +3,7 @@ This repository contains the R source code for MIIC-SDG, an algorithm for the ge
 - miicsdg: for the generation of the synthetic data. The input parameters are described using ?miicsdg::miicsdg
 - writeToFile: to write to a folder the two files representing the DAG network, that can be visualized at the following address: https://miic.curie.fr/vis_NL.php
 
+Nothe that the name of the package is miicsdg and not miic-sdg.
 
 ## Installation
 From GitHub:
