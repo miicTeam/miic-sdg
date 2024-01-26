@@ -274,8 +274,8 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
   originalDataAsGiven = original_data
 
   # set number of samples
-  if(is.na(nsamplesSynthetyques))
-    nsamplesSynthetyques = nrow(original_data)
+  if(is.na(n_synthetic_samples))
+    n_synthetic_samples = nrow(original_data)
 
   # if the list of discrete variables is given transform them to factors (in this way a numerical variable with many levels could become a factor)
   if(!is.na(ids_columnsDiscrete[1])){
@@ -417,7 +417,7 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
     v = originalData_NA_factor[,indexVariable]
     v = v[which(!is.na(v))]
     pdf_of_data <- stats::density(v, from= 0, to=1, bw=0.1)
-    y <- stats::rnorm(nsamplesSynthetyques, sample(v, size = length(v), replace = TRUE), pdf_of_data$bw)
+    y <- stats::rnorm(n_synthetic_samples, sample(v, size = length(v), replace = TRUE), pdf_of_data$bw)
 
     while (length(which(is.na(y))) > 0) {
       y[which(is.na(y))] = stats::rnorm(length(which(is.na(y))), sample(v, size = length(v), replace = TRUE), pdf_of_data$bw)
@@ -431,7 +431,7 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
   # generate discrete distribution that follows the original data for orphan nodes
   generateOrphanDistributionDiscrete <- function(synthetic_data, indexVariable){
     probability = prop.table(table(originalData_NA_factor[,indexVariable]))
-    synthetic_data[,indexVariable] = sample(x = names(probability), prob = probability, size = nsamplesSynthetyques, replace = TRUE)
+    synthetic_data[,indexVariable] = sample(x = names(probability), prob = probability, size = n_synthetic_samples, replace = TRUE)
     if(class(originalData_NA_factor[,indexVariable]) == 'integer')
       synthetic_data[,indexVariable] = as.integer(synthetic_data[,indexVariable])
     return(synthetic_data)
@@ -785,7 +785,7 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
 
 
       # generate synthetic_data data frame
-      synthetic_data = data.frame(matrix(NA, nrow = nsamplesSynthetyques, ncol = ncol(originalData_NA_factor)))
+      synthetic_data = data.frame(matrix(NA, nrow = n_synthetic_samples, ncol = ncol(originalData_NA_factor)))
       colnames(synthetic_data) = colnames(originalData_NA_factor)
 
       plot(g_igraph, edge.arrow.size=0.2)
