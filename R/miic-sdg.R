@@ -234,6 +234,7 @@ writeToFile <- function(miicsdg_res, folder){
 #' @export
 #'
 #' @examples
+#' library(miicsdg)
 #' library(datasets)
 #' data(iris)
 #'

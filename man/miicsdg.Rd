@@ -49,6 +49,7 @@ A list containig 5 objects: \itemize{
 Create synthetic data trough the MIIC algorithm
 }
 \examples{
+library(miicsdg)
 library(datasets)
 data(iris)
 
