@@ -1,0 +1,29 @@
+Package: miicsdg
+Title: Create synthetic data trough the MIIC algorithm
+Version: 1.7
+Authors@R: 
+    person(given = "Nadir",
+           family = "Sella",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Create synthetic data trough the MIIC algorithm. The method is able to deal with mixed type datasets where a mixture of discrete, categorical and continuous variables are present.
+Encoding: UTF-8
+Imports: plyr,
+         dplyr,
+         magrittr,
+         igraph,
+         miic,
+         mice,
+         tidyr,
+         caret,
+         pcalg,
+         bnlearn,
+         randomForest,
+         methods,
+         graph,
+         datasets
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+License: GPL (>= 3)
