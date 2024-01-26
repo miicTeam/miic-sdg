@@ -52,13 +52,15 @@ Create synthetic data trough the MIIC algorithm
 library(datasets)
 data(iris)
 
-miicsdg_list = miicsdg(iris)
+miicsdg_list = miicsdg::miicsdg(iris)
 
 miicsdg_synthetic_data = miicsdg_list[['synthetic_data']]
 miicsdg_adjacencyMatrixDAG = miicsdg_list[['adjacency_matrix_DAG']]
 miicsdg_dataTypes = miicsdg_list[['data_types']]
 miicsdg_edgesMiicServer = miicsdg_list[['edges_miic_server']]
 miic_sdg_miic = miicsdg_list[['miic']]
+
+miicsdg::writeToFile(miicsdg_list , '~/testMIICSDG')
 
 
 }
