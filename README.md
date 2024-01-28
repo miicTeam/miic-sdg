@@ -18,14 +18,17 @@ library(miicsdg)
 library(datasets)
 data(iris)
 
+# run the MIIC-SDG algorithm
 miicsdg_list = miicsdg::miicsdg(iris)
 
+# these are the 5 output objects, please look at the Output session for details
 miicsdg_synthetic_data = miicsdg_list[['synthetic_data']] # this is the synthetic data frame!
 miicsdg_adjacencyMatrixDAG = miicsdg_list[['adjacency_matrix_DAG']]
 miicsdg_dataTypes = miicsdg_list[['data_types']]
 miicsdg_edgesMiicServer = miicsdg_list[['edges_miic_server']]
 miic_sdg_miic = miicsdg_list[['miic']]
 
+# write the DAG into a specifed folder 
 miicsdg::writeToFile(miicsdg_list , '~/testMIICSDG')
 ```
 ## Output
