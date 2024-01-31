@@ -6,7 +6,13 @@ This repository contains the R source code for MIIC-SDG, an algorithm for the ge
 Nothe that the name of the package is miicsdg and not miic-sdg.
 
 ## Installation
-From GitHub:
+You first need to have MIIC installed, please install MIIC from the gitHub repository:
+```R
+library(devtools)
+install_github('miicTeam/miic_R_package')
+```
+
+Install MIIC-SDG from this gitHub repository:
 ```R
 # install.packages("remotes")
 remotes::install_github("miicTeam/miic-sdg")
