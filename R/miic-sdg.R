@@ -176,17 +176,17 @@ createEdgesList = function(all.edges.summary, dag, state_order){
   }
 
 
-  all.edges.summary$infOrt[which(all.edges.summary$infOrt==6)]=1
+  all.edges.summary$ort_inferred[which(all.edges.summary$ort_inferred==6)]=1
   for(i in 1:nrow(all.edges.summary)){
     x = all.edges.summary$x[i]
     y = all.edges.summary$y[i]
 
     if(dag[which(rownames(dag)==x), which(colnames(dag)==y)] == 1){
-      all.edges.summary$infOrt[i] = 2
+      all.edges.summary$ort_inferred[i] = 2
       all.edges.summary$proba[i] = '0;1'
     }
     if(dag[which(rownames(dag)==y), which(colnames(dag)==x)] == 1){
-      all.edges.summary$infOrt[i] = -2
+      all.edges.summary$ort_inferred[i] = -2
       all.edges.summary$proba[i] = '1;0'
     }
   }
@@ -367,8 +367,8 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
 
     if(!verbose)
       sink()
-    originalSummaryR = miic_res$all.edges.summary
-    originalSummary = miic_res$all.edges.summary
+    originalSummaryR = miic_res$summary
+    originalSummary = miic_res$summary
   }
 
   # if there are missing values create a complete version of the dataset using mice
@@ -691,22 +691,22 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
   summary= originalSummary
 
   # keep only existing edges
-  if(length(which(summary[, 'infOrt'] == 0)) > 0)
-    summary = summary[which(summary[, 'infOrt'] != 0), ]
+  if(length(which(summary[, 'ort_inferred'] == 0)) > 0)
+    summary = summary[which(summary[, 'ort_inferred'] != 0), ]
 
   # if we want a DAG starting from the CPDAG from miic
   if(method_DAG == 'CPDAG_to_DAG'){
     temporarySummary = summary
 
-    for(val in which(temporarySummary[,"infOrt"]==-2)){
-      temporarySummary[val,"infOrt"] = 2
+    for(val in which(temporarySummary[,"ort_inferred"]==-2)){
+      temporarySummary[val,"ort_inferred"] = 2
       x = temporarySummary[val,"x"]
       temporarySummary[val,"x"] = summary[val,"y"]
       temporarySummary[val,"y"] = x
     }
 
     # get indirected arcs that we need to orient for DAG creation
-    idxUndirectedArcs = which(temporarySummary[,"infOrt"] == 1 | temporarySummary[,"infOrt"] == 6)
+    idxUndirectedArcs = which(temporarySummary[,"ort_inferred"] == 1 | temporarySummary[,"ort_inferred"] == 6)
 
     if(length(idxUndirectedArcs) == 0){
       temporarySummaryPDAG = temporarySummary
@@ -716,16 +716,16 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
       temporarySummaryDirected = temporarySummary[-idxUndirectedArcs,]
 
       temporarySummaryPDAGRight = temporarySummary[idxUndirectedArcs,]
-      temporarySummaryPDAGRight[, 'infOrt'] = 2
+      temporarySummaryPDAGRight[, 'ort_inferred'] = 2
 
       temporarySummaryPDAGLeft = temporarySummary[idxUndirectedArcs,]
-      temporarySummaryPDAGLeft[, 'infOrt'] = -2
+      temporarySummaryPDAGLeft[, 'ort_inferred'] = -2
 
       temporarySummaryPDAG = rbind(temporarySummaryDirected, temporarySummaryPDAGRight, temporarySummaryPDAGLeft)
 
       temporarySummaryPDAG_copy = temporarySummaryPDAG
-      for(val in which(temporarySummaryPDAG[,"infOrt"]==-2)){
-        temporarySummaryPDAG[val,"infOrt"] = 2
+      for(val in which(temporarySummaryPDAG[,"ort_inferred"]==-2)){
+        temporarySummaryPDAG[val,"ort_inferred"] = 2
         x = temporarySummaryPDAG[val,"x"]
         temporarySummaryPDAG[val,"x"] = temporarySummaryPDAG_copy[val,"y"]
         temporarySummaryPDAG[val,"y"] = x
@@ -914,7 +914,7 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
   res[['synthetic_data']] = results[[1]]$synthetic_data
   res[['adjacency_matrix_DAG']] = dag
   res[['data_types']] = dataType_MIIC_server
-  res[['edges_miic_server']] = createEdgesList(miic_res$all.edges.summary, dag, state_order)
+  res[['edges_miic_server']] = createEdgesList(all.edges.summary = miic_res$summary, dag = dag, state_order = state_order)
   res[['miic']] = miic_res
 
 
