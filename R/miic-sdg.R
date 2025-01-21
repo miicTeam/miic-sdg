@@ -457,7 +457,7 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
       for(node_parent in node_parents){
         pos2 = which(colnames(originalData_NA_factor)==node_parent)
         if(dataType[pos2]=='Continuous'){
-          res_discretization = miic::discretizeMutual(X = originalData_NA_factor[,pos], Y = originalData_NA_factor[,pos2])
+          res_discretization = miic::discretizeMutual(x = originalData_NA_factor[,pos], y = originalData_NA_factor[,pos2])
           cutpoints = res_discretization$cutpoints2
           originalData_NA_factor_copy[,pos2] = cut(x = originalData_NA_factor[,pos2], breaks = cutpoints)
 
@@ -583,7 +583,7 @@ miicsdg <- function(original_data, n_synthetic_samples = NA, method_DAG = 'MIIC_
         for(node_parent in node_parents){
           pos2 = which(colnames(originalData_NA_factor)==node_parent)
           if(dataType[pos2]=='Continuous'){
-            res_discretization = miic::discretizeMutual(X = originalData_NA_factor[,pos], Y = originalData_NA_factor[,pos2])
+            res_discretization = miic::discretizeMutual(x = originalData_NA_factor[,pos], y = originalData_NA_factor[,pos2])
             originalData_NA_factor_copy[,pos2] = cut(x = originalData_NA_factor[,pos2], breaks = res_discretization$cutpoints2)
 
             cutpoints = res_discretization$cutpoints2
